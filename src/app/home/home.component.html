@@ -1,0 +1,15 @@
+<div class="home">
+    <div class="squirrel-container">
+        <app-squirrel-logo></app-squirrel-logo>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-primary" (click)="add()">
+            <img src="../../assets/add-icon.png" class="icon-btn">
+        </button>
+    </div>
+
+    <div *ngFor="let log of urlLogs">
+        <app-url-log [log]="log"></app-url-log>
+    </div>
+</div>

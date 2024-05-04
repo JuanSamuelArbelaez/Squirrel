@@ -1,0 +1,45 @@
+<div class="register-container">
+    <div class="squirrel-container">
+        <app-squirrel-logo></app-squirrel-logo>
+    </div>
+    <form class="regForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="formSection">
+            <div><label for="email">Email</label></div>
+            <input type="email" formControlName="email" id="email">
+            <div *ngIf="registerForm.get('email').errors && registerForm.get('email').dirty">
+                <small *ngIf="registerForm.get('email').errors.required">Email is required.</small>
+                <small *ngIf="registerForm.get('email').errors.email">Please enter a valid email address.</small>
+            </div>
+        </div>
+        
+        <div class="formSection">
+            <div><label for="username">Username</label></div>
+            <input type="text" formControlName="username" id="username">
+            <div *ngIf="registerForm.get('username').errors && registerForm.get('username').dirty">
+                <small *ngIf="registerForm.get('username').errors.required">Username is required.</small>
+            </div>
+        </div>
+      
+        <div class="formSection">
+            <div><label for="password">Password</label></div>
+            <input type="password" formControlName="password" id="password">
+            <div *ngIf="registerForm.get('password').errors && registerForm.get('password').dirty">
+                <small *ngIf="registerForm.get('password').errors.required">Password is required.</small>
+            </div>
+        </div>
+
+        <div class="formSection">
+            <div><label for="passwordConfirm">Password Confirmation</label></div>
+            <input type="password" formControlName="passwordConfirm" id="passwordConfirm">
+            <div *ngIf="registerForm.get('passwordConfirm').errors && registerForm.get('passwordConfirm').dirty">
+                <small *ngIf="registerForm.get('passwordConfirm').errors.required">Password confirmation is required.</small>
+                <small *ngIf="registerForm.get('passwordConfirm').value !== registerForm.get('password').value">Password confirmation does not match.</small>
+            </div>
+        </div>
+      
+        <div class="formSection">
+            <button class="submitBtn" type="submit" [disabled]="registerForm.invalid">Submit</button>
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+    </form>
+</div>

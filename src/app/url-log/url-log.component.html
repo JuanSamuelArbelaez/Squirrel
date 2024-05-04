@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col">
+    <div class="form-group">
+        <div class="form-field">
+            <p>URL</p>
+            <input type="text" class="form-control" [readonly]="!log.isBeingEdited" [value]="log.url" [(ngModel)]="log.url" (ngModelChange)="onUrlChange($event)">
+        </div>
+
+        <div class="form-field">
+            <p>Username</p>
+            <input type="text" class="form-control" [readonly]="!log.isBeingEdited" [value]="log.username" [(ngModel)]="log.username" (ngModelChange)="onUsernameChange($event)">
+        </div>
+
+        <div class="form-field">
+            <p>Password</p>
+            <div class="password-input-container">
+                <input type="password" class="form-control" [readonly]="!log.isBeingEdited" [value]="log.password" [type]="passwordFieldType" [(ngModel)]="log.password" (ngModelChange)="onPasswordChange($event)">
+                <img *ngIf="showPasswordIcon" src="../../assets/show-icon.png" class="password-toggle-icon" (click)="togglePasswordVisibility()">
+                <img *ngIf="!showPasswordIcon" src="../../assets/hide-icon.png" class="password-toggle-icon" (click)="togglePasswordVisibility()">
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="col">
+        <div class="btn-group" role="group">
+            <div>
+                <button type="button" class="btn btn-primary" (click)="toggleEdit()" [ngClass]="log.isBeingEdited ? 'btn-warning' : 'btn-primary'">
+                    <img src="../../assets/edit-icon.png" class="icon-btn" *ngIf="!log.isBeingEdited">
+                    <img src="../../assets/return-icon.png" class="icon-btn" *ngIf="log.isBeingEdited">
+                </button>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!log.isBeingEdited && !hasChanges">
+                    <img src="../../assets/save-icon.png" class="icon-btn" *ngIf="hasChanges">
+                    <img src="../../assets/save-shaded-icon.png" class="icon-btn" *ngIf="!hasChanges">
+                </button>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-primary" (click)="delete()">
+                    <img src="../../assets/delete-icon.png" class="icon-btn">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

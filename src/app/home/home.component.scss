@@ -1,0 +1,21 @@
+.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.btn-primary {
+    margin: 2px;
+    border-style: none;
+    background-color: transparent;
+}
+
+.btn-primary:enabled {
+    cursor: pointer;
+}
+
+.icon-btn {
+    max-width: 60px;
+}

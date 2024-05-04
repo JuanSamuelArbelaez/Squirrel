@@ -1,0 +1,92 @@
+.col, .row {
+    padding: 5px;
+    margin: 4px;
+}
+
+.row {
+    max-width: fit-content;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 10px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.col, .btn-group {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.col {
+    justify-content: center;
+}
+
+.btn-group {
+    height: 100%;
+    justify-content: space-around;
+}
+
+.form-control {
+    min-width: 300px;
+    max-width: 300px;
+    height: fit-content;
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 6px;
+    border-width: 0;
+    border-style: 0;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: grey;
+}
+.form-control:not(:read-only) {
+    border-style: solid;
+}
+
+form input{
+    padding: 1px;
+    border-style: none;
+}
+
+.form-field {
+    border-radius: 5px;
+    border-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.btn-primary {
+    margin: 2px;
+    border-style: none;
+    background-color: transparent;
+}
+
+.btn-primary:enabled {
+    cursor: pointer;
+}
+
+.icon-btn {
+    max-width: 20px;
+}
+
+.password-input-container {
+    position: relative;
+}
+
+.password-toggle-icon {
+    width: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px; /* Puedes ajustar este valor según sea necesario */
+    cursor: pointer;
+}
