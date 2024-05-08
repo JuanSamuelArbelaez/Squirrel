@@ -36,6 +36,14 @@
                 <small *ngIf="registerForm.get('passwordConfirm').value !== registerForm.get('password').value">Password confirmation does not match.</small>
             </div>
         </div>
+
+        <div class="formSection">
+            <input type="checkbox" formControlName="consentimiento" id="consentimiento">
+            <label for="consentimiento">I consent to the processing of my personal data.</label>
+        </div>
+        <div class="formSection">
+            <p>By clicking Submit, you agree to our <a href="/tratamiento-de-datos">Privacy Policy</a>.</p>
+        </div>
       
         <div class="formSection">
             <button class="submitBtn" type="submit" [disabled]="registerForm.invalid">Submit</button>
