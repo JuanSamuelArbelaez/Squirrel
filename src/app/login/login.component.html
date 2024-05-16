@@ -6,25 +6,20 @@
         <div class="formSection">
             <div><label for="email">Email</label></div>
             <input type="email" formControlName="email" id="email">
-            <div *ngIf="loginForm.get('email').errors && loginForm.get('email').dirty">
-            <small *ngIf="loginForm.get('email').errors.required">Email is required.</small>
-            <small *ngIf="loginForm.get('email').errors.email">Please enter a valid email address.</small>
-            </div>
+            <small class="errorMsg" *ngIf="loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.dirty">Email is required.</small>
+            <small class="errorMsg" *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</small>
         </div>
       
         <div class="formSection">
             <div><label for="password">Password</label></div>
             <input type="password" formControlName="password" id="password">
-            <div *ngIf="loginForm.get('password').errors && loginForm.get('password').dirty">
-            <small *ngIf="loginForm.get('password').errors.required">Password is required.</small>
-            </div>
+            <small class="errorMsg" *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.dirty">Password is required.</small>
+            <small class="errorMsg" *ngIf="loginForm.get('password')?.value?.length < 8 && loginForm.get('password')?.dirty">Password must be at least 8 characters long.</small>
         </div>
-
-        <div class="formSection">
-            <div><a href="/password-recovery">Forgot your Password?</a></div>
-            <button class="submitBtn" type="submit" [disabled]="loginForm.invalid">Submit</button>
-            <div><a>Don't have an account yet? <a href="/register">Register</a></a></div>
+      
+        <div class="formSection centeredSection">
+            <button class="submitBtn" type="submit" [disabled]="loginForm.invalid" action="/home">Submit</button>
+            <p>Don't have an account? <a href="/register">Register Now!</a></p>
         </div>
     </form>
 </div>
-  

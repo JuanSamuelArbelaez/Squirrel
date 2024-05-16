@@ -30,30 +30,70 @@
 
     --pill-accent: var(--bright-blue);
 }
+body {
+  align-items:center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 
 label, p, a {
     font-size: xx-small;
 }
 
-.form {
-    padding: 8px;
-    margin: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+form {
+  min-width: 90%;
+  padding: 8px;
+  margin: 8px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.formSection {
+.formSection, .errorMsg {
     padding: 3px;
     margin: 3px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: row;
+    div {
+      min-width: 180px;
+      label{
+        font-size: small;
+      }
+    }
+    * {
+      margin: 3px;
+      padding: 5px;
+    }
+    input {
+      font-size: medium;
+    }
+    small {
+      font-size: 9px;
+      align-self: center;
+    }
+}
+
+.errorMsg{
+  color: #fc0000;
+  position: relative;
 }
 
 .submitBtn{
     width: 60%;
-    align-self: center;
     padding: 3px;
     margin: 3px;
+}
+
+.centeredSection{
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
 }
 
 .submitBtn:enabled:hover::after{

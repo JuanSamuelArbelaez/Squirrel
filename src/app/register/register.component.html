@@ -2,52 +2,42 @@
     <div class="squirrel-container">
         <app-squirrel-logo></app-squirrel-logo>
     </div>
-    <form class="regForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="formSection">
             <div><label for="email">Email</label></div>
             <input type="email" formControlName="email" id="email">
-            <div *ngIf="registerForm.get('email').errors && registerForm.get('email').dirty">
-                <small *ngIf="registerForm.get('email').errors.required">Email is required.</small>
-                <small *ngIf="registerForm.get('email').errors.email">Please enter a valid email address.</small>
-            </div>
+            <small class="errorMsg" *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.dirty">Email is required.</small>
+            <small class="errorMsg" *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email address.</small>
         </div>
         
         <div class="formSection">
-            <div><label for="username">Username</label></div>
-            <input type="text" formControlName="username" id="username">
-            <div *ngIf="registerForm.get('username').errors && registerForm.get('username').dirty">
-                <small *ngIf="registerForm.get('username').errors.required">Username is required.</small>
-            </div>
+            <div><label for="username">Nickname</label></div>
+            <input type="text" formControlName="nickname" id="nickname">
+            <small class="errorMsg"  *ngIf="registerForm.get('nickname')?.errors?.['required'] && registerForm.get('nickname')?.dirty">Nickname is required.</small>
         </div>
       
         <div class="formSection">
             <div><label for="password">Password</label></div>
             <input type="password" formControlName="password" id="password">
-            <div *ngIf="registerForm.get('password').errors && registerForm.get('password').dirty">
-                <small *ngIf="registerForm.get('password').errors.required">Password is required.</small>
-            </div>
+            <small class="errorMsg" *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.dirty">Password is required.</small>
+            <small class="errorMsg" *ngIf="registerForm.get('password')?.value?.length < 8 && registerForm.get('password')?.dirty">Password must be at least 8 characters long.</small>
         </div>
 
         <div class="formSection">
             <div><label for="passwordConfirm">Password Confirmation</label></div>
             <input type="password" formControlName="passwordConfirm" id="passwordConfirm">
-            <div *ngIf="registerForm.get('passwordConfirm').errors && registerForm.get('passwordConfirm').dirty">
-                <small *ngIf="registerForm.get('passwordConfirm').errors.required">Password confirmation is required.</small>
-                <small *ngIf="registerForm.get('passwordConfirm').value !== registerForm.get('password').value">Password confirmation does not match.</small>
+            <small class="errorMsg" *ngIf="!isPasswordMatch() && registerForm.get('passwordConfirm')?.dirty">Password confirmation does not match.</small>
+            <small class="errorMsg" *ngIf="registerForm.get('passwordConfirm')?.errors?.['required'] && registerForm.get('passwordConfirm')?.dirty">Password confirmation is required.</small>
+        </div>
+        <div class="formSection centeredSection">
+            <div>
+                <input type="checkbox" formControlName="consentimiento" id="consentimiento">
+                <label for="consentimiento">I consent to the processing of my personal data.</label>
             </div>
-        </div>
-
-        <div class="formSection">
-            <input type="checkbox" formControlName="consentimiento" id="consentimiento">
-            <label for="consentimiento">I consent to the processing of my personal data.</label>
-        </div>
-        <div class="formSection">
             <p>By clicking Submit, you agree to our <a href="/privacy-policy">Privacy Policy</a>.</p>
-        </div>
-      
-        <div class="formSection">
-            <button class="submitBtn" type="submit" [disabled]="registerForm.invalid">Submit</button>
+            <button class="submitBtn" type="submit" [disabled]="registerForm.invalid" action="/home">Submit</button>
             <p>Already have an account? <a href="/login">Login</a></p>
         </div>
+        
     </form>
 </div>

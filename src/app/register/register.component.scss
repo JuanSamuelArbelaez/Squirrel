@@ -1,8 +1,12 @@
 .register-container{
+    align-self: center;
+    min-width: 850px;
     padding: 8px;
-    margin: 8px;
+    margin: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    border-style: solid;
+    border-radius: 8px;
 }

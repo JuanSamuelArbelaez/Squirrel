@@ -16,3 +16,22 @@ export class SquirrelDisplay {
     public isBeingEdited: boolean = false,
   ) {}
 }
+
+export class Profile {
+	constructor(
+    ID: string,
+	  Nickname: string,
+	  Email: string,
+  ){}
+  
+}
+
+export class Credentials {
+  constructor(
+    Password: string,
+	  Nickname: string,
+	  Email: string,
+	  ID: string,
+  )
+  {}
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SquirrelLogoComponent } from '../squirrel-logo/squirrel-logo.component'
+import { SquirrelLogoComponent } from '../squirrel-logo/squirrel-logo.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -8,28 +9,26 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   imports: [
     SquirrelLogoComponent,
     ReactiveFormsModule,
-  ],
+    CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', '../../styles.scss']
 })
-export class LoginComponent implements OnInit {
-  ngOnInit(): void {
-  }
-  
+export class LoginComponent {
   loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      // Cambiar el campo de 'username' a 'email'
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
-  onSubmit() {
-    if (!this.loginForm.valid) {
-      alert("Form is invalid!");
+  onSubmit(): void {
+    if (!this.loginForm.valid){
+      alert('Error');
+    } else {
+      alert('Redirecting to your Home');
+      //route to /home
     }
   }
-
 }
