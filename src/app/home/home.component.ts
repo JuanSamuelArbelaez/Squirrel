@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SquirrelLogoComponent } from '../squirrel-logo/squirrel-logo.component';
 import { UrlLogComponent } from '../url-log/url-log.component';
 import { CommonModule } from '@angular/common';
-import { Squirrel, SquirrelDisplay } from '../../models/models';
+import { Credentials, Squirrel, SquirrelDisplay } from '../../models/models';
 import { SquireService } from '../../services/squireServices';
 import { TokenService } from '../../services/tokenService';
 
@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
     this.loadSquires();
   }
 
-  constructor(private squireServices: SquireService, private tokenServices: TokenService){}
+  constructor(private squireServices: SquireService){
+  }
 
   urlLogs: SquirrelDisplay[] = [];
 
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
     let v_username: string | null
     let v_password: string | null
     let v_id: string = ""
-    let v_userId: string = this.tokenServices.getUserID();
+    let v_userId = "8d0c1f34-5d5a-417e-a510-3898669420d1";
     
     v_url = prompt("Indique la URL", "url.example.com");
     if (!v_url) { return }
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit {
       password: v_password,
     }
 
-    this.squireServices.addSquire(data).then((response) => {
+    await this.squireServices.addSquire(data).then((response) => {
       v_id = response.id;
       console.log(v_id);
       this.urlLogs.push(new SquirrelDisplay(v_id, data.url, data.username, data.password))
@@ -61,9 +62,8 @@ export class HomeComponent implements OnInit {
   }
 
   async loadSquires() {
-    const userID = this.tokenServices.getUserID();
-    this.squireServices.getSquiresByUser(userID).then((response) => {
-      console.log(response);
+    let userID = "8d0c1f34-5d5a-417e-a510-3898669420d1"
+    await this.squireServices.getSquiresByUser(userID).then((response) => {
       this.urlLogs = response;
       this.sortUrlLogs();
     }).catch((error) => {

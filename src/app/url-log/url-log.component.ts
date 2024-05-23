@@ -1,7 +1,9 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { SquirrelDisplay } from '../../models/models';
+import { Squirrel, SquirrelDisplay } from '../../models/models';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SquireService } from '../../services/squireServices';
+import { response } from 'express';
 
 @Component({
   selector: 'app-url-log',
@@ -15,7 +17,7 @@ export class UrlLogComponent implements OnInit {
     this.snapshot();
   }
 
-  constructor(private host: ElementRef<HTMLElement>){
+  constructor(private host: ElementRef<HTMLElement>, private squireService: SquireService){
 
   }
 
@@ -50,26 +52,35 @@ export class UrlLogComponent implements OnInit {
   }
 
   toggleEdit() {
+    console.log(this.log.isBeingEdited, this.hasChanges)
     if (this.log.isBeingEdited && this.hasChanges){
-      if (!confirm("You have unsaved changes. Do you cant to discard them?")){
-        return;
+      if (confirm("You have unsaved changes. Do you cant to discard them?")){
+        this.lookUp();
+        this.hasChanges = false;
       }
-      this.lookUp()
-      this.hasChanges = false;
+      return;
     }
-    var a: boolean = this.log.isBeingEdited;
     this.log.isBeingEdited = !this.log.isBeingEdited;
-    var b: boolean = this.log.isBeingEdited;
   }
 
   save() {
     this.snapshot()
+    var squire: Squirrel = {
+      id: this.id,
+      user_id: "8d0c1f34-5d5a-417e-a510-3898669420d1",
+      password: this.password,
+      username: this.username,
+      url: this.url
+    }
+
+    this.squireService.editSquire(squire).catch((error) => {alert("Error: " + error)})
     this.hasChanges = false;
     this.log.isBeingEdited = false;
   }
 
   delete() {
     if (confirm('Are you sure you want to delete this password? This action cannot be undone.')) {
+      this.squireService.deleteSquire(this.id)
       this.host.nativeElement.remove();
     }
   }

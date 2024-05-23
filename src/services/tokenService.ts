@@ -7,6 +7,7 @@ const TOKEN_KEY = "AuthToken";
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
+    [x: string]: any;
     private localStorage: Storage | null = null;
 
     constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: any) {
