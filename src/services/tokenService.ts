@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Buffer } from "buffer";
+import { Credentials } from '../models/models';
 
 const TOKEN_KEY = "AuthToken";
 
@@ -8,13 +8,15 @@ const TOKEN_KEY = "AuthToken";
 export class TokenService {
     constructor(private router: Router) { }
 
-    public setToken(token: string) {
+    public setToken(token: Credentials) {
         window.sessionStorage.removeItem(TOKEN_KEY);
-        window.sessionStorage.setItem(TOKEN_KEY, token);
+        window.sessionStorage.setItem(TOKEN_KEY, JSON.stringify(token));
     }
 
-    public getToken(): string | null {
-        return sessionStorage.getItem(TOKEN_KEY);
+    public getToken(): Credentials {
+        var t = sessionStorage.getItem(TOKEN_KEY);
+        if (t) { return JSON.parse(t); }
+        return {Email: "", Password: "", ID: "", Nickname: "",};
     }
 
     public isLogged(): boolean {
@@ -24,48 +26,18 @@ export class TokenService {
         return false;
     }
 
-    public login(token: string) {
-        const decoded = this.decodePayload(token);
-        console.log('Token Values: ', decoded);
-        return decoded;
-    }
-
-
     public logout() {
         window.sessionStorage.clear();
         this.router.navigate(["/login"]);
     }
 
-    private decodePayload(token: string): any {
-        console.log('Token value:', token);
-        const payload = token!.split(".")[1];
-        const payloadDecoded = Buffer.from(payload, 'base64').toString('ascii');
-        const values = JSON.parse(payloadDecoded);
-        return values;
-  }
-
-    public encodePayload(payload: any): string {
-        console.log('Payload value:', payload);
-        const payloadString = JSON.stringify(payload);
-        const payloadBase64 = Buffer.from(payloadString).toString('base64');
-        const header = {
-            alg: 'HS256',
-            typ: 'JWT'
-        };
-        const headerString = JSON.stringify(header);
-        const headerBase64 = Buffer.from(headerString).toString('base64');
-        const token = `${headerBase64}.${payloadBase64}`;
-
-        return token;
+    public getUserNickname(): string {
+        var token: Credentials = this.getToken();
+        return token.Nickname;
     }
 
-
-    public getUserNickname(): string | null {
-        const token = this.getToken();
-        if (token) {
-        const payload = this.decodePayload(token);
-        return payload.nickname || null;
-        }
-        return null;
+    public getUseID(): string {
+        var token: Credentials = this.getToken();
+        return token.ID;
     }
 }
