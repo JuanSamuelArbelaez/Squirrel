@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { SquirrelDisplay } from '../../models/models';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-url-log',
@@ -19,9 +19,9 @@ export class UrlLogComponent implements OnInit {
 
   }
 
-  @Input() log: SquirrelDisplay = { id: 0, url: '', username: '', password: '', isBeingEdited: false};
+  @Input() log: SquirrelDisplay = { id: '', url: '', username: '', password: '', isBeingEdited: false};
   
-  id: number = 0;
+  id: string = '';
   url: string = ''
   username: string = ''
   password: string = ''
@@ -36,14 +36,14 @@ export class UrlLogComponent implements OnInit {
   }
 
   snapshot() {
-    this.id = this.log.id+0;
+    this.id = this.log.id+'';
     this.url = this.log.url+'';
     this.username = this.log.username+'';
     this.password = this.log.password+'';
   }
 
   lookUp() {
-    this.log.id = this.id+0;
+    this.log.id = this.id+'';
     this.log.url = this.url+'';
     this.log.username = this.username+'';
     this.log.password = this.password+'';

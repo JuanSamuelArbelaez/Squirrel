@@ -1,15 +1,14 @@
-export class Squirrel {
-  constructor(
-    public id: number,
-    public url: string,
-    public username: string,
-    public password: string,
-  ) {}
+export interface Squirrel {
+  id: string,
+  url: string,
+  user_id: string,
+  username: string,
+  password: string,
 }
 
 export class SquirrelDisplay {
   constructor(
-    public id: number,
+    public id: string,
     public url: string,
     public username: string,
     public password: string,

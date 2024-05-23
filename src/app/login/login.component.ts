@@ -48,7 +48,7 @@ export class LoginComponent {
       .then((response) => {
         alert(response.message);
         this.tokenServices.setToken(response.userInfo)
-        this.router.navigate(['/home']);
+        if (this.tokenServices.isLogged()) {this.router.navigate(['/home'])}
       })
       .catch((error) => {
         console.error('Error:', error);
