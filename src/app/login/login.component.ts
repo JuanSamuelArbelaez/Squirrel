@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { UserServices } from '../../services/userService';
 import * as models from '../../models/models';
+import { HttpClient } from '@angular/common/http';
+import { TokenService } from '../../services/tokenService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +21,12 @@ import * as models from '../../models/models';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private userServices: UserServices) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private userServices: UserServices,
+    private tokenServices: TokenService,
+    private router: Router,
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -29,18 +37,18 @@ export class LoginComponent {
     if (!this.loginForm.valid){
       alert('Error. Try a valid login form');
     } else {
-      var data: models.Credentials = new models.Credentials(
-        this.loginForm?.get('password')?.value,
-        "",
-        this.loginForm?.get('email')?.value,
-        ""
-      );
+      var data: models.Credentials = {
+        Password: this.loginForm?.get('password')?.value,
+        Nickname: "",
+        Email: this.loginForm?.get('email')?.value,
+        ID: ""
+      };
 
       this.userServices.login(data)
       .then((response) => {
-        // Manejo de la respuesta JSON
-        console.log(response.message); // "Acceso concedido"
-        console.log(response.user);    // Información del usuario
+        alert(response.message);
+        this.tokenServices.setToken(response.userInfo)
+        this.router.navigate(['/home']);
       })
       .catch((error) => {
         console.error('Error:', error);

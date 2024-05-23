@@ -17,21 +17,15 @@ export class SquirrelDisplay {
   ) {}
 }
 
-export class Profile {
-	constructor(
-    ID: string,
-	  Nickname: string,
-	  Email: string,
-  ){}
-  
+export interface Profile {
+  ID: string,
+  Nickname: string,
+  Email: string,
 }
 
-export class Credentials {
-  constructor(
-    Password: string,
-	  Nickname: string,
-	  Email: string,
-	  ID: string,
-  )
-  {}
+export interface Credentials {
+  Password: string,
+  Nickname: string,
+  Email: string,
+  ID: string,
 }

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormGroup,FormBuilder,Validators, ReactiveFormsModule} from '@angular/forms';
 import { SquirrelLogoComponent } from '../squirrel-logo/squirrel-logo.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { UserServices } from '../../services/userService';
+import * as models from '../../models/models';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +23,11 @@ export class RegisterComponent implements OnInit {
   }
   registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: RouterModule) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private userServices: UserServices
+  ) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       nickname: ['', Validators.required],
@@ -33,10 +39,24 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.registerForm.valid){
-      alert('Error');
-    } else {
-      alert('Redirecting to your Home');
-    }
+      alert('Error. Try with a valid registration form.');
+      return;
+    } 
+
+    var data: models.Credentials = {
+      Password: this.registerForm?.get('password')?.value,
+      Nickname: this.registerForm?.get('nickname')?.value,
+      Email: this.registerForm?.get('email')?.value,
+      ID: ""
+    };
+
+    this.userServices.register(data)
+    .then((response) => {
+      alert('Registrations successfull. Refirecting to Login')
+      this.router.navigate(['/login']);
+    }).catch((error) => {
+      alert('Registration unsuccessful: ' + error)
+    });
   }
 
   isPasswordMatch(): boolean {
